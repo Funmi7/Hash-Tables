@@ -53,11 +53,11 @@ class HashTable:
         '''
         index = self._hash_mod(key)
         current = self.storage[index]
-        last = None
 
-        while current is not None and current.key is not key:
-            last = current
-            current = last.next
+        # collision handling
+        while current is not None:
+            current = current.next
+
         new = LinkedPair(key, value)
         new.next = self.storage[index]
         self.storage[index] = new
@@ -75,7 +75,6 @@ class HashTable:
         current = self.storage[index]
         prev = None
         while current and current.key != key:
-            prev = current
             current = prev.next
         if current is None:
             print("WARNING: key to remove not found")
